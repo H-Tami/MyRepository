@@ -1,0 +1,198 @@
+<h1>APEX S11 RP計算機</h1>
+<a href="https://gamewith.jp/apexlegends/article/show/252189" target="_blank">こちらのサイト</a>を参考にしました。<br><br>
+<a><b>*1</b> "倒した敵"とはいわゆるS10時点でのキルポとして数えられる敵のことです。</a><br>
+<a><b>*2</b> ここでの"格下"、"同ランク"、"格上"について。例えばプラチナⅣとプラチナⅠは同ランクです。プラチナⅠからみたダイヤモンドⅣは格上です。</a><br>
+<a>　　~S10までのキルポは格下格上関係ないため格下+同ランク+格上=キルポとなっていれば大丈夫です</a><br><br>
+<a>入力例：プラチナⅠ、4位、2キル,1アシスト,2ダウン、このうちキルした敵はプラチナⅡとプラチナⅣの2人、アシストはダイヤモンドⅣの場合</a><br>
+<a> 　　　　↳ランク帯:プラチナ、順位:4、格下:0、同ランク:2、格上:1　→貰えるRP:164</a>
+
+<style>
+.diet_form {
+    background: #eaf4ff;
+    padding: 10px 30px;
+}
+form dl dt {
+    width: 200px;
+    height: 40px;
+    padding: 10px 0;
+    line-height: 40px;
+    float: left;
+}
+
+
+
+form dl dd {
+    padding: 10px 0;
+    margin: 0;
+}
+.box {
+    box-sizing: border-box;
+    width: 150px !important;
+    height: 40px !important;
+    margin: 0 !important;
+    padding: 0 10px !important;
+}
+.calc-btn {
+    width: 80px;
+    height: 30px;
+    border: 1px solid #333;
+}
+.calc-btn:hover {
+    cursor: pointer;
+}
+h1{
+    padding: 1rem 2rem;
+    border-left: 4px solid #000;
+}
+</style>
+<form class="diet_form">
+    <dl>
+        <dt>ランク帯：</dt>
+        <dd>
+            <select type="text" class="box" name="place">
+                <option value="ブロンズ">ブロンズ</option>
+                <option value="シルバー">シルバー</option>
+                <option value="ゴールド">ゴールド</option>
+                <option value="プラチナ">プラチナ</option>
+                <option value="ダイヤモンド">ダイヤモンド</option>
+                <option value="マスター">マスター</option>
+                <option value="プレデター">プレデター</option>
+            </select>
+        </dd>
+        <dt>順位(位)：</dt>
+        <dd><input type="number" class="box" name="ranking" value="1"></dd>
+        <dl>以下、倒した敵<b>*1</b>の内訳</dl>
+
+        <dt>格下<b>*2</b>(人)：</dt>
+        <dd><input type="number" class="box" name="low" value="0"></dd>
+        <dt>同ランク(人)：</dt>
+        <dd><input type="number" class="box" name="same" value="0"></dd>
+        <dt>格上(人)：</dt>
+        <dd><input type="number" class="box" name="high" value="0"></dd>
+        
+        <p><input type="button" class="calc-btn" onclick="calc(place.value, ranking.value, low.value, same.value, high.value);" value="計算"></p>
+        
+        <dt>貰えるRP(S11~)：</dt>
+        <dd><input id="rp" class="box" type="text" readonly=""></dd>
+        <dt>いままでのRP(~S10)：</dt>
+        <dd><input id="Orp" class="box" type="text" readonly=""></dd>
+
+    </dl>
+</form>
+<script>
+    function calc(place, ranking, low, same, high) {
+        let 順位,倍率,pay,Nrp=0,kp=0,Op,Nkp=0;//pay=入場料,Nrp=上限のないRP,kp=キルポ,Op=古いverの順位によるキルポ倍率(Oldpoint)
+        switch(ranking){
+            case '1':
+                順位=100;
+                倍率=15;
+                Op=25;
+                break;
+            case '2':
+                順位=60;
+                倍率=10;
+                Op=20;
+                break;
+            case '3':
+                順位=40;
+                倍率=10;
+                Op=20;
+                break;
+            case '4':
+                順位=40;
+                倍率=5;
+                Op=15;
+                break;
+            case '5':
+                順位=30;
+                倍率=5;
+                Op=15;
+                break;
+            case '6':
+                順位=30;
+                倍率=2;
+                Op=12;
+                break;
+            case '7':
+                順位=20;
+                倍率=2;
+                Op=12;
+                break;
+            case '8':
+                順位=20;
+                倍率=2;
+                Op=12;
+                break;
+            case '9':
+                順位=10;
+                倍率=2;
+                Op=12;
+                break;
+            case '10':
+                順位=10;
+                倍率=2;
+                Op=12;
+                break;
+            case '11':
+                順位=5;
+                倍率=0;
+                Op=10;
+                break;
+            case '12':
+                順位=5;
+                倍率=0;
+                Op=10;
+                break;
+            case '13':
+                順位=5;
+                倍率=0;
+                Op=10;
+                break;
+            default:
+                順位=0;
+                倍率=0;
+                Op=10;
+        }
+
+        switch(place){
+            case "ブロンズ":
+                pay=0;
+                break;
+            case "シルバー":
+                pay=12;
+                break;
+            case "ゴールド":
+                pay=24;
+                break;
+            case "プラチナ":
+                pay=36;
+                break;
+            case "ダイヤモンド":
+                pay=48;
+                break;
+            case "マスター":
+                pay=60;
+                break;
+            case "プレデター":
+                pay=60;
+                break;
+        }
+        
+        kp=Number(low)+Number(same)+Number(high);
+        Nkp=Number(low)*8+Number(same)*10+Number(high)*12;
+
+        let Nkp_倍率=Nkp*倍率;
+        if(Nkp_倍率>=175){
+            Nkp_倍率=175;
+        }
+        Nrp=順位+Nkp_倍率-pay;
+
+        if(kp>=6){
+            kp=6;
+        }
+        Orp=順位+kp*Op-pay;
+
+        let rp_value = document.getElementById('rp').value = Math.round (Nrp);
+        let Orp_value = document.getElementById('Orp').value = Math.round (Orp);
+    }
+</script>
